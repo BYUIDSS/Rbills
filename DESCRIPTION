@@ -1,11 +1,23 @@
 Package: Rbills
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Tests New R Packages
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Sean Lee <seanlee@byui.com>
+Maintainer: Sean Lee <seanlee@byui.com>
+Description: Provides functionality for my package. Theses functions are for use only with data team and no other
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1
+URL: https://github.com/seanlee0622/Rbills.git
+Suggests: 
+    knitr,
+    rmarkdown,
+    dplyr
+VignetteBuilder: knitr
+Imports: 
+    utils,
+    pdftools,
+    readr,
+    stringr,
+    dplyr
