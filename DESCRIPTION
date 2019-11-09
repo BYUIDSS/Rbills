@@ -4,7 +4,7 @@ Title: Tests New R Packages
 Version: 0.1.0
 Author: Sean Lee <seanlee@byui.com>
 Maintainer: Sean Lee <seanlee@byui.com>
-Description: Provides functionality for my package. Theses functions are for use only with data team and no other
+Description: Provides functionality for my package. Theses functions are for use only with data team and no other people.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -3,6 +3,7 @@
 export(get_pdf_all)
 export(get_pdf_want)
 export(hello)
+export(read_all_powerbills)
 export(read_pdf_gas)
 export(read_pdf_gas_want)
 export(read_pdf_power)
