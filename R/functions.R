@@ -204,6 +204,7 @@ read_pdf_seg_want <- function(x){
 
 
 
+
 #' Read All Power PDF Files
 #'
 #' @param x write the path of your file.
@@ -223,13 +224,13 @@ read_pdf_seg_want <- function(x){
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr mutate
 #' @importFrom dplyr bind_rows
-#' @import dplyr
-#' @import plyr
+#' @importFrom plyr ldply
+#' @import utils
 #'
 #' @examples
 #' c <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills/"
-#' read_pdf_power("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
-read_pdf_power <- function(x) {
+#' read_pdf_rmp("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+read_pdf_rmp <- function(x) {
 
   pb_vector <- list.files(path = x,  pattern = "pdf$")
 
@@ -254,8 +255,8 @@ read_pdf_power <- function(x) {
           str_remove(",") %>%
           str_split(" ") %>%
           plyr::ldply() %>%
-          select(V11, V12) %>%
-          rename("onkwh" = V12, "meter_multiplier" = V11) %>%
+          dplyr::select(V11, V12) %>%
+          dplyr::rename("onkwh" = V12, "meter_multiplier" = V11) %>%
           mutate(
             meter_multiplier = as.numeric(meter_multiplier),
             building = building_name)
@@ -265,23 +266,23 @@ read_pdf_power <- function(x) {
           str_remove(",") %>%
           str_split(" ") %>%
           plyr::ldply() %>%
-          select(V12) %>%
-          rename("offkwh" = V12)
+          dplyr::select(V12) %>%
+          dplyr::rename("offkwh" = V12)
 
         kvarh <- pb_text[str_which(pb_text, meter_number)[4]] %>%
           str_squish() %>%
           str_remove(",") %>%
           str_split(" ") %>%
           plyr::ldply() %>%
-          select(V12) %>%
-          rename("kvarh" = V12)
+          dplyr::select(V12) %>%
+          dplyr::rename("kvarh" = V12)
 
         date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
           str_squish() %>%
           str_split("BILLING DATE: ") %>%
           plyr::ldply() %>%
-          select(2) %>%
-          rename("date" = V2)
+          dplyr::select(2) %>%
+          dplyr::rename("date" = V2)
         # %>%
         #   mutate(date = mdy(date)) %>%
         #   mutate(date = as_date(date))
@@ -297,8 +298,8 @@ read_pdf_power <- function(x) {
           str_remove(",") %>%
           str_split(" ") %>%
           plyr::ldply() %>%
-          select(V11, V12) %>%
-          rename("kwh" = V12, "meter_multiplier" = V11) %>%
+          dplyr::select(V11, V12) %>%
+          dplyr::rename("kwh" = V12, "meter_multiplier" = V11) %>%
           mutate(
             meter_multiplier = as.numeric(meter_multiplier),
             building = building_name)
@@ -308,15 +309,15 @@ read_pdf_power <- function(x) {
           str_remove(",") %>%
           str_split(" ") %>%
           plyr::ldply() %>%
-          select(V12) %>%
-          rename("kvarh" = V12)
+          dplyr::select(V12) %>%
+          dplyr::rename("kvarh" = V12)
 
         date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
           str_squish() %>%
           str_split("BILLING DATE: ") %>%
           plyr::ldply() %>%
-          select(2) %>%
-          rename("date" = V2)
+          dplyr::select(2) %>%
+          dplyr::rename("date" = V2)
         # %>%
         #   mutate(date = mdy(date)) %>%
         #   mutate(date = as_date(date))
@@ -339,4 +340,4 @@ read_pdf_power <- function(x) {
 }
 
 
-
+# utils::globalVariables(c("V11", "V12", "V2", "meter_multiplier"), package = "Rbills", add = FALSE)
