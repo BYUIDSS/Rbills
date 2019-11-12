@@ -16,6 +16,7 @@ A table
 Read All Power PDF Files
 }
 \examples{
-c <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills/"
-read_pdf_rmp("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
+pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+read_pdf_rmp(pdf_folder)
 }

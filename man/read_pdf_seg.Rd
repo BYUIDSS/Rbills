@@ -16,6 +16,7 @@ A table
 Read All Gas PDF Files
 }
 \examples{
-c <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text/"
-read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
+pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
+pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+read_pdf_seg(pdf_file)
 }

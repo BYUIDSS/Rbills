@@ -18,5 +18,6 @@ Choose A List Of Files Interactively On MS Windows
 \examples{
 getwd()
 get_pdf_want(getwd())
-get_pdf_want("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+get_pdf_want(pdf_folder)
 }

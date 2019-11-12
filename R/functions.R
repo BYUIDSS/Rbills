@@ -25,7 +25,8 @@ hello <- function(x) {
 #' @export
 #'
 #' @examples
-#' get_pdf_all("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+#' get_pdf_all(pdf_folder)
 #'
 get_pdf_all <- function(x){
   list.files(path = x,  pattern = "pdf$")
@@ -45,7 +46,8 @@ get_pdf_all <- function(x){
 #' @examples
 #' getwd()
 #' get_pdf_want(getwd())
-#' get_pdf_want("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+#' get_pdf_want(pdf_folder)
 get_pdf_want <- function(x){
   sean <- choose.files(default = paste0(x, "/*.*"), caption = "Select files")
   basename(sean)
@@ -74,8 +76,9 @@ get_pdf_want <- function(x){
 #' @import dplyr
 #'
 #' @examples
-#' c <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text/"
-#' read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
+#' pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
+#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+#' read_pdf_seg(pdf_file)
 read_pdf_seg <- function(x){
 
   gas_files <- list.files(path = x,  pattern = "pdf$")
@@ -151,8 +154,9 @@ read_pdf_seg <- function(x){
 #' @import dplyr
 #'
 #' @examples
-#' c <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text/"
-#' read_pdf_seg_want("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
+#' pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
+#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+#' read_pdf_seg_want(pdf_folder)
 read_pdf_seg_want <- function(x){
 
   gas_files <- choose.files(default = paste0(x, "/*.*"), caption = "Select files")
@@ -228,8 +232,9 @@ read_pdf_seg_want <- function(x){
 #' @import utils
 #'
 #' @examples
-#' c <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills/"
-#' read_pdf_rmp("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+#' pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
+#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+#' read_pdf_rmp(pdf_folder)
 read_pdf_rmp <- function(x) {
 
   pb_vector <- list.files(path = x,  pattern = "pdf$")
