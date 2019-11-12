@@ -18,6 +18,8 @@ Choose A List Of Files Interactively On MS Windows
 \examples{
 getwd()
 get_pdf_want(getwd())
+
+devtools::load_all()
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 get_pdf_want(pdf_folder)
 }

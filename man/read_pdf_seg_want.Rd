@@ -16,6 +16,7 @@ A table
 Read Gas PDF Files You Want
 }
 \examples{
+devtools::load_all()
 pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 read_pdf_seg_want(pdf_folder)

@@ -16,6 +16,7 @@ A table
 Read All Power PDF Files
 }
 \examples{
+devtools::load_all()
 pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 read_pdf_rmp(pdf_folder)

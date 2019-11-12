@@ -25,6 +25,7 @@ hello <- function(x) {
 #' @export
 #'
 #' @examples
+#' devtools::load_all()
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' get_pdf_all(pdf_folder)
 #'
@@ -46,6 +47,8 @@ get_pdf_all <- function(x){
 #' @examples
 #' getwd()
 #' get_pdf_want(getwd())
+#'
+#' devtools::load_all()
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' get_pdf_want(pdf_folder)
 get_pdf_want <- function(x){
@@ -76,9 +79,11 @@ get_pdf_want <- function(x){
 #' @import dplyr
 #'
 #' @examples
+#' devtools::load_all()
 #' pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-#' read_pdf_seg(pdf_file)
+#' read_pdf_seg(pdf_folder)
+#' read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
 read_pdf_seg <- function(x){
 
   gas_files <- list.files(path = x,  pattern = "pdf$")
@@ -154,6 +159,7 @@ read_pdf_seg <- function(x){
 #' @import dplyr
 #'
 #' @examples
+#' devtools::load_all()
 #' pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' read_pdf_seg_want(pdf_folder)
@@ -232,6 +238,7 @@ read_pdf_seg_want <- function(x){
 #' @import utils
 #'
 #' @examples
+#' devtools::load_all()
 #' pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' read_pdf_rmp(pdf_folder)
