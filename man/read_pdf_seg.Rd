@@ -4,10 +4,12 @@
 \alias{read_pdf_seg}
 \title{Read All Gas PDF Files}
 \usage{
-read_pdf_seg(x)
+read_pdf_seg(path_x = getwd(), x)
 }
 \arguments{
-\item{x}{write the path of your file.}
+\item{path_x}{write the path of your file.}
+
+\item{x}{put the file's list}
 }
 \value{
 A table
@@ -19,6 +21,6 @@ Read All Gas PDF Files
 devtools::load_all()
 pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-read_pdf_seg(pdf_folder)
-read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
+read_pdf_seg(pdf_folder, x)
+read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_package/Rbills/data-raw", x)
 }
