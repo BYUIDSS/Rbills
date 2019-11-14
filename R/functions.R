@@ -68,6 +68,8 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr mutate
 #' @importFrom dplyr bind_rows
+#' @importFrom tidyr unite
+#' @importFrom dplyr rename
 #' @import dplyr
 #' @import utils
 #' @import devtools
@@ -77,6 +79,8 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' x <- get_pdf(pdf_folder, choose.file = TRUE)
 #' read_pdf_seg(pdf_folder, x)
+#' x <- get_pdf("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
+#' hi <- read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text", x)
 read_pdf_seg <- function(path_x = getwd(), x){
 
   # if (is.null(x)) {
@@ -128,6 +132,11 @@ read_pdf_seg <- function(path_x = getwd(), x){
 
 
   }
+
+  gas_table <- gas_table %>% rename("meter_id" = value)
+
+  gas_table <- gas_table %>%
+    unite(billing_month, year, sep = " ", remove = T, col = "invoice_date")
 
   return(gas_table)
   #write.csv(gas_table, "gas_table.csv", row.names = FALSE)
