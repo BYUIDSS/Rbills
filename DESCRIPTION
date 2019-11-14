@@ -20,4 +20,6 @@ Imports:
     readr,
     stringr,
     dplyr,
-    plyr
+    plyr,
+    lubridate,
+    devtools

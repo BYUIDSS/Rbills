@@ -20,5 +20,6 @@ get pdf files and list it.
 \examples{
 devtools::load_all()
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-get_pdf_all(pdf_folder)
+get_pdf(pdf_folder)
+get_pdf(pdf_folder, choose.file = TRUE)
 }

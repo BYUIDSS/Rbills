@@ -26,10 +26,12 @@ hello <- function(x) {
 #' @export
 #'
 #' @importFrom utils choose.files
+#' @import devtools
 #' @examples
 #' devtools::load_all()
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-#' get_pdf_all(pdf_folder)
+#' get_pdf(pdf_folder)
+#' get_pdf(pdf_folder, choose.file = TRUE)
 get_pdf <- function(path_x, choose.file = FALSE){
 
   if (!choose.file) {
@@ -68,13 +70,13 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' @importFrom dplyr bind_rows
 #' @import dplyr
 #' @import utils
+#' @import devtools
 #'
 #' @examples
 #' devtools::load_all()
-#' pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+#' x <- get_pdf(pdf_folder, choose.file = TRUE)
 #' read_pdf_seg(pdf_folder, x)
-#' read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_package/Rbills/data-raw", x)
 read_pdf_seg <- function(path_x = getwd(), x){
 
   # if (is.null(x)) {
@@ -161,6 +163,7 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom lubridate mdy
 #' @importFrom lubridate as_date
 #' @import utils
+#' @import devtools
 #'
 #' @examples
 #' devtools::load_all()

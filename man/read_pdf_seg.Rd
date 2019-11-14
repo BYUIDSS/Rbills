@@ -19,8 +19,7 @@ Read All Gas PDF Files
 }
 \examples{
 devtools::load_all()
-pdf_file <- system.file("data-raw", "example_gasbill.pdf", package = "Rbills", mustWork = TRUE)
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+x <- get_pdf(pdf_folder, choose.file = TRUE)
 read_pdf_seg(pdf_folder, x)
-read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_package/Rbills/data-raw", x)
 }
