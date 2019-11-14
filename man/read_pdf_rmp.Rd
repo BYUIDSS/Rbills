@@ -4,10 +4,12 @@
 \alias{read_pdf_rmp}
 \title{Read All Power PDF Files}
 \usage{
-read_pdf_rmp(x)
+read_pdf_rmp(path_x = getwd(), x)
 }
 \arguments{
-\item{x}{write the path of your file.}
+\item{path_x}{write the path of your file.}
+
+\item{x}{put the file's list}
 }
 \value{
 A table
@@ -21,4 +23,8 @@ pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills",
 pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 read_pdf_rmp(pdf_folder)
 read_pdf_rmp("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+x <- get_pdf("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+path <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills"
+dt <- read_pdf_rmp(path, x)
+View(dt)
 }

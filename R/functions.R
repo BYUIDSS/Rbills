@@ -142,7 +142,8 @@ read_pdf_seg <- function(path_x = getwd(), x){
 
 #' Read All Power PDF Files
 #'
-#' @param x write the path of your file.
+#' @param path_x write the path of your file.
+#' @param x put the file's list
 #'
 #' @return A table
 #' @export
@@ -162,7 +163,7 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom plyr ldply
 #' @importFrom lubridate mdy
 #' @importFrom lubridate as_date
-#' @import utils
+#' @importFrom utils View
 #' @import devtools
 #'
 #' @examples
@@ -171,51 +172,66 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' read_pdf_rmp(pdf_folder)
 #' read_pdf_rmp("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
-read_pdf_rmp <- function(x) {
-
-  # Determines which pdfs will have data extracted
-  pb_vector <- list.files(path = x,  pattern = "pdf$")
+#' x <- get_pdf("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
+#' path <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills"
+#' dt <- read_pdf_rmp(path, x)
+#' View(dt)
+read_pdf_rmp <- function(path_x = getwd(), x) {
 
   energy_charge <- data.frame()
 
   # Prompts users to enter one or more meter numbers to extract data for
-  meter_number <- readline(prompt = "Please enter one or more Meter Numbers (separated by a comma and a space): ")
-
+  building <- readline(prompt = "Please enter one or more building names, separated by commas and ensure names match the building names on the bill: ")
   # Separates the user input into individual strings
-  meter_numbers_list <- unlist(strsplit(meter_number, split = ", "))
+  building_list <- unlist(strsplit(building, split = ", "))
 
 
-  for (bill_name in pb_vector) { #Runs through each pdf selected and extracts the data
+  for (bill_name in x) { #Runs through each pdf selected and extracts the data
 
-    for (number in meter_numbers_list) { #For every pdf, extracts data associated with each input meter number
+    # Converts each line of the pdf into a string
+    pb_text <- pdf_text(paste0(path_x, "/", bill_name)) %>% read_lines()
 
-      pb_text <- pdf_text(paste0(x, "/", bill_name)) %>% #Converts each line of the pdf into a string
-        read_lines()
+    # For every pdf, extracts data associated with each input meter number
+    for (building in building_list) {
 
-      if (sum(str_detect(pb_text, number)) > 2) { #Determines if the meter number shows up 3 or more times in the PDF to make sure data is being pulled for main meter number
+      meter_number <- pb_text[(str_which(pb_text, building)[1])] %>%
+        str_squish() %>%
+        str_remove(",") %>%
+        str_split(" ") %>%
+        plyr::ldply() %>%
+        select(str_which(., "\\d{8}"))
+
+      if (dim(meter_number)[2] == 0){
+
+        meter_number <- pb_text[(str_which(pb_text, building)[1]) + 1] %>%
+          str_squish() %>%
+          str_remove(",") %>%
+          str_split(" ") %>%
+          plyr::ldply() %>%
+          select(str_which(., "\\d{8}"))
+
+      }
+
+      meter_number <- meter_number %>%
+        unlist(as.character(meter_number[1]))
 
 
-        kwh <- pb_text[str_which(pb_text, number)[2]] %>% #Extracts kwh from the pdf for a given meter number
-          str_squish() %>% #Removes spaces from the selected string
-          str_remove(",") %>% #Removes commas from the string
-          str_split(" ") %>% #Splits the string into individual strings
-          plyr::ldply() %>% #Converts the strings into a data frame
+      kwh <- pb_text[str_which(pb_text, meter_number)[2]] %>% #Extracts kwh from the pdf for a given meter number
+        str_squish() %>% #Removes spaces from the selected string
+        str_remove(",") %>% #Removes commas from the string
+        str_split(" ") %>% #Splits the string into individual strings
+        plyr::ldply() #Converts the strings into a data frame
+
+      if ("V12" %in% colnames(kwh)) {
+
+        kwh <- kwh %>%
           select(V12, V13) %>% #Selects the data we want
           rename("kwh" = V12, "on_kwh" = V13) %>%
           mutate(kwh = as.numeric(gsub("\\,", "", kwh))) #Converts the kwh column from a character data type into numeric data type
 
-        # bldg <- pb_text[((str_which(pb_text, number)[2]) - 4)] %>%
-        #   str_squish() %>%
-        #   str_remove(",") %>%
-        #   str_split(" ") %>%
-        #   plyr::ldply() %>%
-        #   select(V1, V2, V3) %>%
-        #   mutate(building = paste(V1, V2, V3), sep = " ") %>%
-        #   select(building)
-
         if (kwh$on_kwh == "onkwh") {#If statement determines if the meter number is broken into on peak and off peak hours and extracts if necessary
 
-          offkwh <- pb_text[str_which(pb_text, number)[3]] %>%
+          offkwh <- pb_text[str_which(pb_text, meter_number)[3]] %>%
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
@@ -224,7 +240,7 @@ read_pdf_rmp <- function(x) {
             rename("offkwh" = V12) %>%
             mutate(offkwh = as.numeric(gsub("\\,", "", offkwh)))
 
-          kvarh <- pb_text[str_which(pb_text, number)[4]] %>%
+          kvarh <- pb_text[str_which(pb_text, meter_number)[4]] %>%
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
@@ -242,15 +258,13 @@ read_pdf_rmp <- function(x) {
             mutate(date = mdy(date)) %>%
             mutate(date = as_date(date))
 
-          rows <- cbind(date, number, kwh, offkwh, kvarh) %>% #Binding all of the extracted data into one data frame
-            rename("onkwh" = kwh,
-                   "meter_number" = number) %>%
+          rows <- cbind(date, building, meter_number, kwh, offkwh, kvarh) %>% #Binding all of the extracted data into one data frame
+            rename("onkwh" = kwh) %>%
             mutate(totalkwh = onkwh + offkwh)
-
 
         } else{
 
-          kvarh <- pb_text[str_which(pb_text, number)[3]] %>%
+          kvarh <- pb_text[str_which(pb_text, meter_number)[3]] %>%
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
@@ -268,27 +282,92 @@ read_pdf_rmp <- function(x) {
             mutate(date = mdy(date)) %>%
             mutate(date = as_date(date))
 
-          rows <- cbind(date, number, kwh, kvarh) %>%
-            rename("totalkwh" = kwh,
-                   "meter_number" = number)
+          rows <- cbind(date, building, meter_number, kwh, kvarh) %>%
+            rename("totalkwh" = kwh)
 
         }
 
-        energy_charge <- bind_rows(energy_charge, rows) %>% #Binding data from each iteration of the loop onto the main dataframe
-          select(-on_kwh)
+      } else if (("V12" %in% colnames(kwh)) == FALSE)  { #Determines if the format changes due to meter number changing mid-month
 
+        kwh <- pb_text[(str_which(pb_text, meter_number)[2]) + 1] %>%
+          str_squish() %>%
+          str_remove(",") %>%
+          str_split(" ") %>%
+          plyr::ldply() %>%
+          select(V3, V4) %>%
+          rename("kwh" = V3, "on_kwh" = V4) %>%
+          mutate(kwh = as.numeric(gsub("\\,", "", kwh)))
+
+        if (kwh$on_kwh == "onkwh"){
+
+          offkwh <- pb_text[(str_which(pb_text, meter_number)[3]) + 2] %>%
+            str_squish() %>%
+            str_remove(",") %>%
+            str_split(" ") %>%
+            plyr::ldply() %>%
+            select(V3) %>%
+            rename("offkwh" = V3) %>%
+            mutate(offkwh = as.numeric(gsub("\\,", "", offkwh)))
+
+          kvarh <- pb_text[str_which(pb_text, meter_number)[4] + 1] %>%
+            str_squish() %>%
+            str_remove(",") %>%
+            str_split(" ") %>%
+            plyr::ldply() %>%
+            select(V3) %>%
+            rename("kvarh" = V3) %>%
+            mutate(kvarh = as.numeric(gsub("\\,", "", kvarh)))
+
+          date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
+            str_squish() %>%
+            str_split("BILLING DATE: ") %>%
+            plyr::ldply() %>%
+            select(2) %>%
+            rename("date" = V2) %>%
+            mutate(date = mdy(date)) %>%
+            mutate(date = as_date(date))
+
+          rows <- cbind(date, building, meter_number, kwh, offkwh, kvarh) %>% #Binding all of the extracted data into one data frame
+            rename("onkwh" = kwh) %>%
+            mutate(totalkwh = onkwh + offkwh)
+
+        } else{
+
+          kvarh <- pb_text[(str_which(pb_text, meter_number)[3]) + 1] %>%
+            str_squish() %>%
+            str_remove(",") %>%
+            str_split(" ") %>%
+            plyr::ldply() %>%
+            select(V12) %>%
+            rename("kvarh" = V12) %>%
+            mutate(kvarh = as.numeric(gsub("\\,", "", kvarh)))
+
+          date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
+            str_squish() %>%
+            str_split("BILLING DATE: ") %>%
+            plyr::ldply() %>%
+            select(2) %>%
+            rename("date" = V2) %>%
+            mutate(date = mdy(date)) %>%
+            mutate(date = as_date(date))
+
+          rows <- cbind(date, building, number, kwh, kvarh) %>%
+            rename("totalkwh" = kwh)
+
+        }
       }
+
+      energy_charge <- bind_rows(energy_charge, rows) %>% #Binding data from each iteration of the loop onto the main dataframe
+        select(-on_kwh)
 
     }
 
     energy_charge <- energy_charge %>% #Reordering the columns
-      select(date, meter_number, onkwh, offkwh, totalkwh, kvarh)
+      select(date, building, meter_number, onkwh, offkwh, totalkwh, kvarh)
 
   }
 
   return(energy_charge)
-
 }
-
 
 # utils::globalVariables(c("V11", "V12", "V2", "meter_multiplier"), package = "Rbills", add = FALSE)
