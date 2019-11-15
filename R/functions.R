@@ -1,20 +1,3 @@
-#' My Hello World Function
-#'
-#' @param x The name of the person to say hi to
-#'
-#' @return The output from \code{\link{print}}
-#' @export
-#'
-#' @examples
-#' hello("Sean")
-#' \dontrun{
-#' hello("John")
-#' }
-hello <- function(x) {
-  print(paste0("Hello ", x, ", this is the world!"))
-}
-
-
 #' All PDF data
 #'
 #' @description get pdf files and list it.
@@ -26,9 +9,7 @@ hello <- function(x) {
 #' @export
 #'
 #' @importFrom utils choose.files
-#' @import devtools
 #' @examples
-#' devtools::load_all()
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' get_pdf(pdf_folder)
 #' get_pdf(pdf_folder, choose.file = TRUE)
@@ -68,19 +49,15 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr mutate
 #' @importFrom dplyr bind_rows
+#' @import utils
 #' @importFrom tidyr unite
 #' @importFrom dplyr rename
 #' @import dplyr
-#' @import utils
-#' @import devtools
 #'
 #' @examples
-#' devtools::load_all()
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' x <- get_pdf(pdf_folder, choose.file = TRUE)
 #' read_pdf_seg(pdf_folder, x)
-#' x <- get_pdf("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text")
-#' hi <- read_pdf_seg("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/Gas_bills_plain_text", x)
 read_pdf_seg <- function(path_x = getwd(), x){
 
   # if (is.null(x)) {
@@ -173,18 +150,11 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom lubridate mdy
 #' @importFrom lubridate as_date
 #' @importFrom utils View
-#' @import devtools
 #'
 #' @examples
-#' devtools::load_all()
 #' pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
 #' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 #' read_pdf_rmp(pdf_folder)
-#' read_pdf_rmp("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
-#' x <- get_pdf("C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills")
-#' path <- "C:/Users/User/Desktop/MATH 488 Brother Hathaway/merit_medical_FA19/documents/reference_material/power_bills"
-#' dt <- read_pdf_rmp(path, x)
-#' View(dt)
 read_pdf_rmp <- function(path_x = getwd(), x) {
 
   energy_charge <- data.frame()
