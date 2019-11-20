@@ -103,7 +103,17 @@ read_pdf_seg <- function(path_x = getwd(), x){
 
     index <- c(current_invoice[12])
 
-    temp_table <- as_tibble(index) %>% mutate(billing_month = current_invoice[1], year = current_invoice[2], gas_supplied_price = current_invoice[16], gas_supplied_MMbtu = current_invoice[17], gas_paid = current_invoice[18], transportation_fuel_price = current_invoice[24], transportation_fuel_MMbtu = current_invoice[25], transportation_fuel_paid = current_invoice[26])
+    temp_table <- as_tibble(index) %>% mutate(billing_month = current_invoice[1],
+                                              year = current_invoice[2],
+                                              invoice_m = current_invoice[4],
+                                              invoice_d = current_invoice[5],
+                                              invoice_y = current_invoice[6],
+                                              gas_supp_price = as.numeric(current_invoice[16]),
+                                              gas_supp_mmbtu = as.numeric(current_invoice[17]),
+                                              gas_supp_ext = as.numeric(current_invoice[18]),
+                                              trans_fuel_price = as.numeric(current_invoice[24]),
+                                              trans_fuel_mmbtu = as.numeric(current_invoice[25]),
+                                              trans_fuel_ext = as.numeric(current_invoice[26]))
 
     gas_table <- bind_rows(gas_table,temp_table)
 
@@ -113,7 +123,9 @@ read_pdf_seg <- function(path_x = getwd(), x){
   gas_table <- gas_table %>% rename("meter_id" = value)
 
   gas_table <- gas_table %>%
-    unite(billing_month, year, sep = " ", remove = T, col = "invoice_date")
+    unite(billing_month, year, sep = " ", remove = T, col = "billing_month") %>%
+    unite(invoice_m, invoice_d, sep = " ", remove = T, col = "invoice_date") %>%
+    unite(invoice_date, invoice_y, sep = ", ", remove = T, col = "invoice_date")
 
   return(gas_table)
   #write.csv(gas_table, "gas_table.csv", row.names = FALSE)
@@ -345,6 +357,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
       select(date, building, meter_number, onkwh, offkwh, totalkwh, kvarh)
 
   }
+
+  energy_charge <- energy_charge %>% rename("invoice_date" = date)
 
   return(energy_charge)
 }
