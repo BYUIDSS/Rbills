@@ -110,9 +110,9 @@ path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 x <- get_pdf(path, choose.file = TRUE)
 
 # Type Bldg 85, Main Bldg, East Bldg, West Bldg 1, West Bldg 2 when prompt function occurs.
-# power_table <- read_pdf_rmp(path, x)
+power_table <- read_pdf_rmp(path, x)
 
-# head(power_table)
+head(power_table)
 
 # If you want to convert to the csv file, use utils::write.csv function.
 # utils::write.csv(power_table, "power_table.csv", row.names = FALSE) 

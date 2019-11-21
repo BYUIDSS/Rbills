@@ -120,9 +120,13 @@ path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 x <- get_pdf(path, choose.file = TRUE)
 
 # Type Bldg 85, Main Bldg, East Bldg, West Bldg 1, West Bldg 2 when prompt function occurs.
-# power_table <- read_pdf_rmp(path, x)
+power_table <- read_pdf_rmp(path, x)
+#> Please enter one or more building names, separated by commas and ensure names match the building names on the bill:
 
-# head(power_table)
+head(power_table)
+#> [1] invoice_date building     meter_number onkwh        offkwh      
+#> [6] totalkwh     kvarh       
+#> <0 rows> (or 0-length row.names)
 
 # If you want to convert to the csv file, use utils::write.csv function.
 # utils::write.csv(power_table, "power_table.csv", row.names = FALSE) 

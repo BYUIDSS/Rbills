@@ -158,10 +158,11 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr mutate
 #' @importFrom dplyr bind_rows
-#' @importFrom plyr ldply
 #' @importFrom lubridate mdy
 #' @importFrom lubridate as_date
 #' @importFrom utils View
+#' @importFrom purrr map_df
+#' @importFrom data.table transpose
 #'
 #' @examples
 #' pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
@@ -169,7 +170,8 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' read_pdf_rmp(pdf_folder)
 read_pdf_rmp <- function(path_x = getwd(), x) {
 
-  energy_charge <- data.frame()
+  energy_charge <- data.frame(matrix(ncol = 7, nrow = 0))
+  colnames(energy_charge) <- c("date", "building", "meter_number", "onkwh", "offkwh", "totalkwh", "kvarh")
 
   # Prompts users to enter one or more meter numbers to extract data for
   building <- readline(prompt = "Please enter one or more building names, separated by commas and ensure names match the building names on the bill: ")
@@ -189,7 +191,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
         str_squish() %>%
         str_remove(",") %>%
         str_split(" ") %>%
-        plyr::ldply() %>%
+        map_df(as.data.frame) %>%
+        transpose %>%
         select(str_which(., "\\d{8}"))
 
       if (dim(meter_number)[2] == 0){
@@ -198,7 +201,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
           str_squish() %>%
           str_remove(",") %>%
           str_split(" ") %>%
-          plyr::ldply() %>%
+          map_df(as.data.frame) %>%
+          transpose %>%
           select(str_which(., "\\d{8}"))
 
       }
@@ -211,7 +215,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
         str_squish() %>% #Removes spaces from the selected string
         str_remove(",") %>% #Removes commas from the string
         str_split(" ") %>% #Splits the string into individual strings
-        plyr::ldply() #Converts the strings into a data frame
+        map_df(as.data.frame) %>%
+        transpose #Converts the strings into a data frame
 
       if ("V12" %in% colnames(kwh)) {
 
@@ -226,7 +231,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(V12) %>%
             rename("offkwh" = V12) %>%
             mutate(offkwh = as.numeric(gsub("\\,", "", offkwh)))
@@ -235,7 +241,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(V12) %>%
             rename("kvarh" = V12) %>%
             mutate(kvarh = as.numeric(gsub("\\,", "", kvarh)))
@@ -243,7 +250,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
           date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
             str_squish() %>%
             str_split("BILLING DATE: ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(2) %>%
             rename("date" = V2) %>%
             mutate(date = mdy(date)) %>%
@@ -259,7 +267,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(V12) %>%
             rename("kvarh" = V12) %>%
             mutate(kvarh = as.numeric(gsub("\\,", "", kvarh)))
@@ -267,7 +276,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
           date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
             str_squish() %>%
             str_split("BILLING DATE: ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(2) %>%
             rename("date" = V2) %>%
             mutate(date = mdy(date)) %>%
@@ -284,7 +294,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
           str_squish() %>%
           str_remove(",") %>%
           str_split(" ") %>%
-          plyr::ldply() %>%
+          map_df(as.data.frame) %>%
+          transpose %>%
           select(V3, V4) %>%
           rename("kwh" = V3, "on_kwh" = V4) %>%
           mutate(kwh = as.numeric(gsub("\\,", "", kwh)))
@@ -295,7 +306,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(V3) %>%
             rename("offkwh" = V3) %>%
             mutate(offkwh = as.numeric(gsub("\\,", "", offkwh)))
@@ -304,7 +316,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(V3) %>%
             rename("kvarh" = V3) %>%
             mutate(kvarh = as.numeric(gsub("\\,", "", kvarh)))
@@ -312,7 +325,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
           date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
             str_squish() %>%
             str_split("BILLING DATE: ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(2) %>%
             rename("date" = V2) %>%
             mutate(date = mdy(date)) %>%
@@ -328,7 +342,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
             str_squish() %>%
             str_remove(",") %>%
             str_split(" ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(V12) %>%
             rename("kvarh" = V12) %>%
             mutate(kvarh = as.numeric(gsub("\\,", "", kvarh)))
@@ -336,7 +351,8 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
           date <- pb_text[str_which(pb_text, "BILLING DATE:")[1]] %>%
             str_squish() %>%
             str_split("BILLING DATE: ") %>%
-            plyr::ldply() %>%
+            map_df(as.data.frame) %>%
+            transpose %>%
             select(2) %>%
             rename("date" = V2) %>%
             mutate(date = mdy(date)) %>%
@@ -353,8 +369,6 @@ read_pdf_rmp <- function(path_x = getwd(), x) {
 
     }
 
-    energy_charge <- energy_charge %>% #Reordering the columns
-      select(date, building, meter_number, onkwh, offkwh, totalkwh, kvarh)
 
   }
 

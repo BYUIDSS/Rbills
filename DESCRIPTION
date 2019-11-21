@@ -22,4 +22,6 @@ Imports:
     dplyr,
     plyr,
     lubridate,
-    tidyr
+    tidyr,
+    purrr,
+    data.table
