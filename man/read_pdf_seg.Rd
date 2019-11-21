@@ -17,8 +17,6 @@ A table
 \description{
 Read All Gas PDF Files
 }
-\examples{
-pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-x <- get_pdf(pdf_folder, choose.file = TRUE)
-read_pdf_seg(pdf_folder, x)
+\seealso{
+Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
 }

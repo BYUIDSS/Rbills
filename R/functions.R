@@ -9,10 +9,7 @@
 #' @export
 #'
 #' @importFrom utils choose.files
-#' @examples
-#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-#' get_pdf(pdf_folder)
-#' get_pdf(pdf_folder, choose.file = TRUE)
+#' @seealso Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
 get_pdf <- function(path_x, choose.file = FALSE){
 
   if (!choose.file) {
@@ -53,11 +50,7 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' @importFrom tidyr unite
 #' @importFrom dplyr rename
 #' @import dplyr
-#'
-#' @examples
-#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-#' x <- get_pdf(pdf_folder, choose.file = TRUE)
-#' read_pdf_seg(pdf_folder, x)
+#' @seealso Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
 read_pdf_seg <- function(path_x = getwd(), x){
 
   # if (is.null(x)) {
@@ -163,11 +156,7 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom utils View
 #' @importFrom purrr map_df
 #' @importFrom data.table transpose
-#'
-#' @examples
-#' pdf_file <- system.file("data-raw", "example_powerbill.pdf", package = "Rbills", mustWork = TRUE)
-#' pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-#' read_pdf_rmp(pdf_folder)
+#' @seealso Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
 read_pdf_rmp <- function(path_x = getwd(), x) {
 
   energy_charge <- data.frame(matrix(ncol = 7, nrow = 0))

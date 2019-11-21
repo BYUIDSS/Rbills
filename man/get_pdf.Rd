@@ -17,8 +17,6 @@ A list
 \description{
 get pdf files and list it.
 }
-\examples{
-pdf_folder <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
-get_pdf(pdf_folder)
-get_pdf(pdf_folder, choose.file = TRUE)
+\seealso{
+Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
 }
