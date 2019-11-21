@@ -7,8 +7,23 @@
 
 <!-- badges: end -->
 
-The goal of Rbills is to provide functionality for my package. Theses
-functions are for use only with data team and no other people.
+## Overview
+
+`Rbills` helps you scrape information from PDF files. It is desined to
+scrape only `Rocky Mountain Power` and `Summit Energy` documents.
+
+You can use the `Rbills` package to:
+
+  - **get\_pdf**: get all files in a directory or get files that you
+    choose in a directory.
+
+  - **read\_pdf\_seg**: read pdf files from Summit Energy documents.
+
+  - **read\_pdf\_rmp**: read pdf files from Rocky Mountain Power
+    documents.
+
+Theses functions are for use only with the data team and no other
+people.
 
 ## Installation
 
@@ -26,35 +41,89 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("BYUIDSS/Rbills")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Usage
 
 ``` r
 library(Rbills)
-## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+### get\_pdf
+
+There are two main ways to use `get_pdf` function:
+
+  - To get all files in a directory, insert path in the function.
+    `choose.file = FALSE` is default. The following code is an example.
+
+<!-- end list -->
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+devtools::load_all()
+#> Loading Rbills
+path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+get_pdf(path)
+#> [1] "example_gasbill.pdf"   "example_powerbill.pdf"
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
+  - To get files that you choose in a directory, insert path and
+    `choose.file = TRUE`. The following code is an example.
 
-You can also embed plots, for example:
+<!-- end list -->
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+``` r
+devtools::load_all()
+#> Loading Rbills
+path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+get_pdf(path, choose.file = TRUE)
+#> [1] "example_gasbill.pdf"
+```
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
+### read\_pdf\_seg
+
+The `read_pdf_seg` function only works for `Summit Energy` documents.
+This function provides a table of data that fits the template of a given
+file. The following code is an example.
+
+``` r
+devtools::load_all()
+#> Loading Rbills
+
+path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+
+# Choose 'example_gasbill' file.
+x <- get_pdf(path, choose.file = TRUE)
+
+gas_table <- read_pdf_seg(path, x)
+
+head(gas_table)
+#>   meter_id billing_month invoice_date gas_supp_price gas_supp_mmbtu
+#> 1 24800033      May 2013 June 5, 2013           2.28           1056
+#>   gas_supp_ext trans_fuel_price trans_fuel_mmbtu trans_fuel_ext
+#> 1      2407.68              2.1               37           77.7
+
+# If you want to convert to the csv file, use utils::write.csv function. 
+# utils::write.csv(gas_table, "gas_table.csv", row.names = FALSE)
+```
+
+### read\_pdf\_rmp
+
+The `read_pdf_rmp` function only works for `Rocky Mountain Power`
+documents. This function provides a table of data that fits the template
+of a given file. The following code is an example.
+
+``` r
+devtools::load_all()
+#> Loading Rbills
+
+path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+
+# Choose 'example_powerbill' file.
+x <- get_pdf(path, choose.file = TRUE)
+
+# Type Bldg 85, Main Bldg, East Bldg, West Bldg 1, West Bldg 2 when prompt function occurs.
+# power_table <- read_pdf_rmp(path, x)
+
+# head(power_table)
+
+# If you want to convert to the csv file, use utils::write.csv function.
+# utils::write.csv(power_table, "power_table.csv", row.names = FALSE) 
+```
