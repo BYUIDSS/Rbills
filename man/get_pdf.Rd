@@ -18,5 +18,5 @@ A list
 get pdf files and list it.
 }
 \seealso{
-Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
+Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 }

@@ -18,5 +18,5 @@ A table
 Read All Power PDF Files
 }
 \seealso{
-Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
+Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 }

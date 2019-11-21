@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @importFrom utils choose.files
-#' @seealso Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
+#' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 get_pdf <- function(path_x, choose.file = FALSE){
 
   if (!choose.file) {
@@ -50,7 +50,7 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' @importFrom tidyr unite
 #' @importFrom dplyr rename
 #' @import dplyr
-#' @seealso Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
+#' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 read_pdf_seg <- function(path_x = getwd(), x){
 
   # if (is.null(x)) {
@@ -156,7 +156,7 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom utils View
 #' @importFrom purrr map_df
 #' @importFrom data.table transpose
-#' @seealso Check \code{\href{https://github.com/BYUIDSS/Rbills}{README.md}} to know how to use.
+#' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 read_pdf_rmp <- function(path_x = getwd(), x) {
 
   energy_charge <- data.frame(matrix(ncol = 7, nrow = 0))
