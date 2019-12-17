@@ -3,26 +3,27 @@
 #' @description get pdf files and list it.
 #'
 #' @param path_x write the path of your file.
-#' @param choose.file choose.file = FALSE means you want all data files, choose.file = TRUE means you want specific data files.
+#' @param choose.file choose.file = FALSE means you want all data files in the folder, choose.file = TRUE means you want a specific pdf file.
 #'
-#' @return A list
+#' @return A list of files paths.
 #' @export
 #'
-#' @importFrom utils choose.files
 #' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 get_pdf <- function(path_x, choose.file = FALSE){
 
   if (!choose.file) {
 
-    list.files(path = path_x,  pattern = "pdf$")
+    out <- list.files(path = path_x,  pattern = "pdf$")
 
 
   } else {
 
-    sean <- file.choose(default = paste0(path_x, "/*.*"), caption = "Select files")
-    basename(sean)
+    out <- file.choose()
+    basename(out)
 
   }
+
+  out
 
 }
 
