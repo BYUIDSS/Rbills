@@ -1,10 +1,16 @@
 Package: Rbills
 Type: Package
-Title: Tests New R Packages
+Title: Reads pdfs of utility bills into tables.
 Version: 0.1.0
-Author: Sean Lee <seanlee@byui.com>
-Maintainer: Sean Lee <seanlee@byui.com>
-Description: Provides functionality for my package. Theses functions are for use only with data team and no other people.
+Authors@R: c(
+    person(family = "Lee", given = "Sean", email = "seanlee@byui.edu", role = c("aut", "cre")),
+    person(family = "Cromar", given = "John", role = "aut"),
+    person(family = "Westover", given = "Benjamin", role = "aut"),
+    person(family = "Eckery", given = "Joshua", role = "aut"),
+    person(family = "McLaughlin", given = "Trey", role = "aut"),
+    person(family = "Hathaway", given = "J.", role = c("aut", "cre")))
+    )
+Description: Handles pdfs from specific utilities as specified in the functions.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

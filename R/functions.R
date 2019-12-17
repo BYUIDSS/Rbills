@@ -5,7 +5,7 @@
 #' @param path_x write the path of your file.
 #' @param choose.file choose.file = FALSE means you want all data files in the folder, choose.file = TRUE means you want a specific pdf file.
 #'
-#' @return A list of files paths.
+#' @return A vector of files paths.
 #' @export
 #'
 #' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
@@ -32,8 +32,8 @@ get_pdf <- function(path_x, choose.file = FALSE){
 
 #' Read All Gas PDF Files
 #'
-#' @param path_x write the path of your file.
-#' @param x put the file's list
+#' @param path_x a string that sets the directory where the filenames are located.
+#' @param x a vector of strings that have filenames.
 #'
 #' @return A table
 #' @export
@@ -52,7 +52,7 @@ get_pdf <- function(path_x, choose.file = FALSE){
 #' @importFrom dplyr rename
 #' @import dplyr
 #' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
-read_pdf_seg <- function(path_x = getwd(), x){
+read_pdf_seg <- function(path_x, x){
 
   # if (is.null(x)) {
   #
@@ -134,8 +134,8 @@ read_pdf_seg <- function(path_x = getwd(), x){
 
 #' Read All Power PDF Files
 #'
-#' @param path_x write the path of your file.
-#' @param x put the file's list
+#' @param path_x a string that sets the directory where the filenames are located.
+#' @param x a vector of strings that have filenames.
 #'
 #' @return A table
 #' @export
@@ -158,7 +158,7 @@ read_pdf_seg <- function(path_x = getwd(), x){
 #' @importFrom purrr map_df
 #' @importFrom data.table transpose
 #' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
-read_pdf_rmp <- function(path_x = getwd(), x) {
+read_pdf_rmp <- function(path_x, x) {
 
   energy_charge <- data.frame(matrix(ncol = 7, nrow = 0))
   colnames(energy_charge) <- c("date", "building", "meter_number", "onkwh", "offkwh", "totalkwh", "kvarh")
