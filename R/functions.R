@@ -19,7 +19,7 @@ get_pdf <- function(path_x, choose.file = FALSE){
 
   } else {
 
-    sean <- choose.files(default = paste0(path_x, "/*.*"), caption = "Select files")
+    sean <- file.choose(default = paste0(path_x, "/*.*"), caption = "Select files")
     basename(sean)
 
   }
