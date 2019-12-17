@@ -27,13 +27,6 @@ people.
 
 ## Installation
 
-You can install the released version of Rbills from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("Rbills")
-```
-
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
@@ -57,11 +50,8 @@ There are two main ways to use `get_pdf` function:
 <!-- end list -->
 
 ``` r
-devtools::load_all()
-#> Loading Rbills
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 get_pdf(path)
-#> [1] "example_gasbill.pdf"   "example_powerbill.pdf"
 ```
 
   - To get files that you choose in a directory, insert path and
@@ -70,11 +60,8 @@ get_pdf(path)
 <!-- end list -->
 
 ``` r
-devtools::load_all()
-#> Loading Rbills
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 get_pdf(path, choose.file = TRUE)
-#> [1] "example_gasbill.pdf"
 ```
 
 ### read\_pdf\_seg
@@ -84,9 +71,6 @@ This function provides a table of data that fits the template of a given
 file. The following code is an example.
 
 ``` r
-devtools::load_all()
-#> Loading Rbills
-
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 
 # Choose 'example_gasbill' file.
@@ -100,8 +84,6 @@ head(gas_table)
 #>   gas_supp_ext trans_fuel_price trans_fuel_mmbtu trans_fuel_ext
 #> 1      2407.68              2.1               37           77.7
 
-# If you want to convert to the csv file, use utils::write.csv function. 
-# utils::write.csv(gas_table, "gas_table.csv", row.names = FALSE)
 ```
 
 ### read\_pdf\_rmp
@@ -111,9 +93,6 @@ documents. This function provides a table of data that fits the template
 of a given file. The following code is an example.
 
 ``` r
-devtools::load_all()
-#> Loading Rbills
-
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 
 # Choose 'example_powerbill' file.
@@ -128,6 +107,4 @@ head(power_table)
 #> [6] totalkwh     kvarh       
 #> <0 rows> (or 0-length row.names)
 
-# If you want to convert to the csv file, use utils::write.csv function.
-# utils::write.csv(power_table, "power_table.csv", row.names = FALSE) 
 ```
