@@ -7,7 +7,7 @@ Authors@R: c(
     person(family = "Westover", given = "Benjamin", role = "aut"),
     person(family = "Eckery", given = "Joshua", role = "aut"),
     person(family = "McLaughlin", given = "Trey", role = "aut"),
-    person(family = "Hathaway", given = "J.", role = c("aut", "cre"))
+    person(family = "Hathaway", given = "J.", role = c("aut", "cre"), email = "hathawayj@byui.edu")
     )
 Description: Handles pdfs from specific utilities as specified in the functions.
 License: GPL-3
