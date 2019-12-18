@@ -136,6 +136,7 @@ read_pdf_seg <- function(path_x, x){
 #'
 #' @param path_x a string that sets the directory where the filenames are located.
 #' @param x a vector of strings that have filenames.
+#' @param building_names defaults to NULL.  If NULL then user is prompted to type names.  Else a vector of building names can be provided to avoid the prompt.
 #'
 #' @return A table
 #' @export
@@ -158,15 +159,25 @@ read_pdf_seg <- function(path_x, x){
 #' @importFrom purrr map_df
 #' @importFrom data.table transpose
 #' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
-read_pdf_rmp <- function(path_x, x) {
+read_pdf_rmp <- function(path_x, x, building_names = NULL) {
 
   energy_charge <- data.frame(matrix(ncol = 7, nrow = 0))
   colnames(energy_charge) <- c("date", "building", "meter_number", "onkwh", "offkwh", "totalkwh", "kvarh")
 
   # Prompts users to enter one or more meter numbers to extract data for
-  building <- readline(prompt = "Please enter one or more building names, separated by commas and ensure names match the building names on the bill: ")
-  # Separates the user input into individual strings
-  building_list <- unlist(strsplit(building, split = ", "))
+  if(is.null(building_names) {
+    building <- readline(prompt = "Please enter one or more building names, separated by commas and ensure names match the building names on the bill: ")
+    # Separates the user input into individual strings
+    building_list <- unlist(strsplit(building, split = ", "))
+  }
+  # just use the building_names input.
+  if(!is.null(building_names)) {
+    building_list <- building_names
+  }
+
+
+
+
 
 
   for (bill_name in x) { #Runs through each pdf selected and extracts the data
