@@ -161,7 +161,7 @@ read_pdf_seg <- function(path_x, x){
 #' @seealso Check \href{https://github.com/BYUIDSS/Rbills}{README.md} to know how to use.
 read_pdf_rmp <- function(path_x, x, building_names = NULL) {
 
-  energy_charge <- data.frame(date = "1/4/19", building = "name",
+  energy_charge <- data.frame(date = as.Date(Sys.time()), building = "name",
                               meter_number = " ",
                               onkwh = 9, offkwh = 9, totalkwh = 9, kvarh = 9,
                               stringsAsFactors = FALSE)[-1,]
