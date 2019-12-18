@@ -165,7 +165,7 @@ read_pdf_rmp <- function(path_x, x, building_names = NULL) {
   colnames(energy_charge) <- c("date", "building", "meter_number", "onkwh", "offkwh", "totalkwh", "kvarh")
 
   # Prompts users to enter one or more meter numbers to extract data for
-  if(is.null(building_names) {
+  if(is.null(building_names)) {
     building <- readline(prompt = "Please enter one or more building names, separated by commas and ensure names match the building names on the bill: ")
     # Separates the user input into individual strings
     building_list <- unlist(strsplit(building, split = ", "))
