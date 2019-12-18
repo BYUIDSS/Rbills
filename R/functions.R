@@ -367,7 +367,6 @@ read_pdf_rmp <- function(path_x, x, building_names = NULL) {
 
         }
       }
-
       energy_charge <- bind_rows(energy_charge, rows) %>% #Binding data from each iteration of the loop onto the main dataframe
         select(-on_kwh)
 
