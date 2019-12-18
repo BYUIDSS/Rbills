@@ -2,7 +2,7 @@ Package: Rbills
 Title: Reads pdfs of utility bills into tables.
 Version: 0.1.0
 Authors@R: c(
-    person(family = "Lee", given = "Sean", email = "seanlee@byui.edu", role = c("aut", "cre")),
+    person(family = "Lee", given = "Sean", email = "seanlee@byui.edu", role = c("aut")),
     person(family = "Cromar", given = "John", role = "aut"),
     person(family = "Westover", given = "Benjamin", role = "aut"),
     person(family = "Eckery", given = "Joshua", role = "aut"),
