@@ -4,12 +4,14 @@
 \alias{read_pdf_rmp}
 \title{Read All Power PDF Files}
 \usage{
-read_pdf_rmp(path_x = getwd(), x)
+read_pdf_rmp(path_x, x, building_names = NULL)
 }
 \arguments{
-\item{path_x}{write the path of your file.}
+\item{path_x}{a string that sets the directory where the filenames are located.}
 
-\item{x}{put the file's list}
+\item{x}{a vector of strings that have filenames.}
+
+\item{building_names}{defaults to NULL.  If NULL then user is prompted to type names.  Else a vector of building names can be provided to avoid the prompt.}
 }
 \value{
 A table

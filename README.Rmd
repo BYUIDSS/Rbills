@@ -35,13 +35,7 @@ Theses functions are for use only with the data team and no other people.
 
 ## Installation
 
-You can install the released version of Rbills from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("Rbills")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -61,7 +55,6 @@ There are two main ways to use `get_pdf` function:
  * To get all files in a directory, insert path in the function. `choose.file = FALSE` is default. The following code is an example.
 
 ```{r}
-devtools::load_all()
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 get_pdf(path)
 ```
@@ -69,7 +62,6 @@ get_pdf(path)
  * To get files that you choose in a directory, insert path and `choose.file = TRUE`. The following code is an example.
  
 ```{r}
-devtools::load_all()
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 get_pdf(path, choose.file = TRUE)
 ```
@@ -80,8 +72,6 @@ get_pdf(path, choose.file = TRUE)
 The `read_pdf_seg` function only works for `Summit Energy` documents. This function provides a table of data that fits the template of a given file. The following code is an example.
 
 ```{r}
-devtools::load_all()
-
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 
 # Choose 'example_gasbill' file.
@@ -102,8 +92,6 @@ The `read_pdf_rmp` function only works for `Rocky Mountain Power` documents. Thi
 
 
 ```{r}
-devtools::load_all()
-
 path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
 
 # Choose 'example_powerbill' file.

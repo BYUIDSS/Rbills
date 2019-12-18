@@ -9,10 +9,10 @@ get_pdf(path_x, choose.file = FALSE)
 \arguments{
 \item{path_x}{write the path of your file.}
 
-\item{choose.file}{choose.file = FALSE means you want all data files, choose.file = TRUE means you want specific data files.}
+\item{choose.file}{choose.file = FALSE means you want all data files in the folder, choose.file = TRUE means you want a specific pdf file.}
 }
 \value{
-A list
+A vector of files paths.
 }
 \description{
 get pdf files and list it.

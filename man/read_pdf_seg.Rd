@@ -4,12 +4,12 @@
 \alias{read_pdf_seg}
 \title{Read All Gas PDF Files}
 \usage{
-read_pdf_seg(path_x = getwd(), x)
+read_pdf_seg(path_x, x)
 }
 \arguments{
-\item{path_x}{write the path of your file.}
+\item{path_x}{a string that sets the directory where the filenames are located.}
 
-\item{x}{put the file's list}
+\item{x}{a vector of strings that have filenames.}
 }
 \value{
 A table
