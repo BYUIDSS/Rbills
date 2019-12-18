@@ -284,7 +284,7 @@ read_pdf_rmp <- function(path_x, x, building_names = NULL) {
             mutate(date = mdy(date)) %>%
             mutate(date = as_date(date))
 
-          rows <- cbind(date, building, meter_number, kwh, kvarh) %>%
+          rows <- cbind(date, building, meter_number, kwh, kvarh, stringsAsFactors = FALSE) %>%
             rename("totalkwh" = kwh)
 
         }
@@ -359,7 +359,7 @@ read_pdf_rmp <- function(path_x, x, building_names = NULL) {
             mutate(date = mdy(date)) %>%
             mutate(date = as_date(date))
 
-          rows <- cbind(date, building, number, kwh, kvarh) %>%
+          rows <- cbind(date, building, number, kwh, kvarh, stringsAsFactors = FALSE) %>%
             rename("totalkwh" = kwh)
 
         }
