@@ -333,7 +333,7 @@ read_pdf_rmp <- function(path_x, x, building_names = NULL) {
             mutate(date = mdy(date)) %>%
             mutate(date = as_date(date))
 
-          rows <- cbind(date, building, meter_number, kwh, offkwh, kvarh) %>% #Binding all of the extracted data into one data frame
+          rows <- cbind(date, building, meter_number, kwh, offkwh, kvarh, stringsAsFactors = FALSE) %>% #Binding all of the extracted data into one data frame
             rename("onkwh" = kwh) %>%
             mutate(totalkwh = onkwh + offkwh)
 
