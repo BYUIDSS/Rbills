@@ -19,11 +19,11 @@ get_pdf <- function(path_x, choose.file = FALSE){
   } else {
 
     out <- file.choose()
-    basename(out)
+
 
   }
 
-  out
+  basename(out)
 
 }
 
