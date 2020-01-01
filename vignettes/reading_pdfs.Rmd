@@ -51,3 +51,23 @@ knitr::kable(power_table)
 ```
 
 
+## Using the gas bill function
+
+Summit Energy gas bills include all the crucial information about each building. The following png is the example of gasbill pdf file of Summit Energy. This is the first page of the *example_gasbill.pdf* included with the package. Notice that you will be able to see the billing month, invoice number, invoice date, and so on. 
+
+![](example_gasbill_frontpage.PNG)
+
+```{r}
+path <- system.file("data-raw", package = "Rbills", mustWork = TRUE)
+
+# Choose 'example_gasbill' file.
+x <- list.files(path, "gasbill")
+
+gas_table <- read_pdf_seg(path, x)
+```
+
+Then you can see the table of data
+```{r}
+knitr::kable(gas_table)
+```
+
